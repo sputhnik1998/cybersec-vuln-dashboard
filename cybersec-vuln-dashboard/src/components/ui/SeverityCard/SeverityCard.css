@@ -1,0 +1,67 @@
+/* ============================================
+   SeverityCard Component - Dark Mode Styles
+   ============================================ */
+
+.severity-card {
+  padding: var(--spacing-xl);
+  height: 100%;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-normal);
+}
+
+.severity-card:hover {
+  border-color: var(--color-border-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.severity-card__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.severity-card__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.severity-card__indicator {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.severity-card__label {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-tertiary);
+  text-transform: capitalize;
+}
+
+.severity-card__count {
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-left: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .severity-card {
+    padding: var(--spacing-lg);
+  }
+
+  .severity-card__grid {
+    gap: var(--spacing-md);
+  }
+
+  .severity-card__count {
+    font-size: var(--font-size-body-large);
+  }
+}
