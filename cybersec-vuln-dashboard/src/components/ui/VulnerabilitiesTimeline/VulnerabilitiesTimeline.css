@@ -1,0 +1,60 @@
+/* ============================================
+   VulnerabilitiesTimeline Component - Dark Mode Styles
+   ============================================ */
+
+.vulnerabilities-timeline {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+.vulnerabilities-timeline__loading,
+.vulnerabilities-timeline__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-medium);
+}
+
+.vulnerabilities-timeline__empty {
+  color: var(--color-text-tertiary);
+}
+
+.vulnerabilities-timeline__tooltip {
+  background-color: var(--color-bg-tertiary);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.vulnerabilities-timeline__tooltip p {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+.vulnerabilities-timeline__tooltip p + p {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-small);
+}
+
+/* Chart text color overrides for Recharts */
+.vulnerabilities-timeline text {
+  fill: var(--color-text-secondary);
+  font-size: var(--font-size-body-small);
+}
+
+.vulnerabilities-timeline .recharts-cartesian-axis-tick-value {
+  fill: var(--color-text-tertiary);
+}
+
+.vulnerabilities-timeline .recharts-cartesian-grid-horizontal line,
+.vulnerabilities-timeline .recharts-cartesian-grid-vertical line {
+  stroke: var(--color-border-default);
+}
