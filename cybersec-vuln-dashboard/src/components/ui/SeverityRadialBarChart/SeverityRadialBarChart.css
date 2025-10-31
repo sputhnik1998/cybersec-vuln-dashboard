@@ -1,0 +1,74 @@
+/* ============================================
+   SeverityRadialBarChart Component - Dark Mode Styles
+   ============================================ */
+
+.severity-radial-bar-chart {
+  width: 100%;
+  height: 100%;
+  min-height: 270px;
+}
+
+.severity-radial-bar-chart__loading,
+.severity-radial-bar-chart__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 270px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-medium);
+}
+
+.severity-radial-bar-chart__empty {
+  color: var(--color-text-tertiary);
+}
+
+.severity-radial-bar-chart__tooltip {
+  background-color: var(--color-bg-tertiary);
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.severity-radial-bar-chart__tooltip p {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-body-medium);
+  font-weight: var(--font-weight-medium);
+}
+
+.severity-radial-bar-chart__tooltip p + p {
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-body-small);
+}
+
+/* Legend styling */
+.severity-radial-bar-chart .recharts-legend-wrapper {
+  color: var(--color-text-secondary) !important;
+}
+
+.severity-radial-bar-chart .recharts-legend-item {
+  color: var(--color-text-secondary) !important;
+}
+
+.severity-radial-bar-chart .recharts-legend-item-text {
+  color: var(--color-text-secondary) !important;
+  text-transform: capitalize;
+  fill: var(--color-text-secondary) !important;
+}
+
+/* RadialBar background styling */
+.severity-radial-bar-chart .recharts-radial-bar-background-sector {
+  fill: var(--color-bg-tertiary) !important;
+}
+
+/* Remove white fills */
+.severity-radial-bar-chart .recharts-surface {
+  background: transparent;
+}
+
+.severity-radial-bar-chart text {
+  fill: var(--color-text-secondary) !important;
+}
