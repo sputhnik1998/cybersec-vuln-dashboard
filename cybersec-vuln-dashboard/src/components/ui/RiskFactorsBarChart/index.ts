@@ -1,0 +1,1 @@
+export { RiskFactorsBarChart } from './RiskFactorsBarChart';
