@@ -40,9 +40,9 @@ export interface VulnerabilitiesResponse {
   pagination: {
     currentPage: number;
     limit: number;
+    totalCount: number;
+    totalPages: number;
     hasMore: boolean;
-    nextCursor: string | null;
-    totalCount: number | null;
   };
 }
 

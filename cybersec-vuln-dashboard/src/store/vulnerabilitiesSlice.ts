@@ -6,9 +6,9 @@ import type { Vulnerability, VulnerabilitiesResponse } from '../services/api';
 interface PaginationInfo {
   currentPage: number;
   limit: number;
+  totalCount: number;
+  totalPages: number;
   hasMore: boolean;
-  nextCursor: string | null;
-  totalCount: number | null;
 }
 
 interface VulnerabilitiesState {
@@ -16,14 +16,14 @@ interface VulnerabilitiesState {
   pagination: PaginationInfo | null;
   loading: boolean;
   error: string | null;
+  sortBy: string;
+  sortOrder: 'asc' | 'desc';
   filters: {
     severity: string;
     status: string;
     packageName: string;
     cve: string;
   };
-  currentCursor: string | null;
-  pageCursors: Record<number, string | null>; // Store cursor for each page
 }
 
 const initialState: VulnerabilitiesState = {
@@ -31,14 +31,14 @@ const initialState: VulnerabilitiesState = {
   pagination: null,
   loading: false,
   error: null,
+  sortBy: 'published',
+  sortOrder: 'desc',
   filters: {
     severity: '',
     status: '',
     packageName: '',
     cve: '',
   },
-  currentCursor: null,
-  pageCursors: { 1: null }, // Page 1 starts with no cursor
 };
 
 interface FetchVulnerabilitiesParams {
@@ -50,7 +50,6 @@ interface FetchVulnerabilitiesParams {
   cve?: string;
   sortBy?: string;
   order?: 'asc' | 'desc';
-  cursor?: string | null;
 }
 
 // Async thunk for fetching vulnerabilities
@@ -68,8 +67,6 @@ const vulnerabilitiesSlice = createSlice({
   reducers: {
     setFilters: (state, action: PayloadAction<Partial<VulnerabilitiesState['filters']>>) => {
       state.filters = { ...state.filters, ...action.payload };
-      state.currentCursor = null; // Reset cursor when filters change
-      state.pageCursors = { 1: null }; // Reset page cursors
     },
     clearFilters: (state) => {
       state.filters = {
@@ -78,21 +75,15 @@ const vulnerabilitiesSlice = createSlice({
         packageName: '',
         cve: '',
       };
-      state.currentCursor = null;
-      state.pageCursors = { 1: null };
     },
     resetVulnerabilities: (state) => {
       state.items = [];
       state.pagination = null;
       state.error = null;
-      state.currentCursor = null;
-      state.pageCursors = { 1: null };
     },
-    setCurrentCursor: (state, action: PayloadAction<string | null>) => {
-      state.currentCursor = action.payload;
-    },
-    setPageCursor: (state, action: PayloadAction<{ page: number; cursor: string | null }>) => {
-      state.pageCursors[action.payload.page] = action.payload.cursor;
+    setSorting: (state, action: PayloadAction<{ sortBy: string; sortOrder: 'asc' | 'desc' }>) => {
+      state.sortBy = action.payload.sortBy;
+      state.sortOrder = action.payload.sortOrder;
     },
   },
   extraReducers: (builder) => {
@@ -106,29 +97,7 @@ const vulnerabilitiesSlice = createSlice({
         (state, action: PayloadAction<VulnerabilitiesResponse>) => {
           state.loading = false;
           state.items = action.payload.vulnerabilities;
-
-          // Preserve totalCount from first page load
-          const newPagination = action.payload.pagination;
-          if (newPagination.totalCount !== null) {
-            state.pagination = newPagination;
-          } else if (state.pagination) {
-            // Keep the old totalCount but update other pagination fields
-            state.pagination = {
-              ...newPagination,
-              totalCount: state.pagination.totalCount,
-            };
-          } else {
-            state.pagination = newPagination;
-          }
-
-          state.currentCursor = action.payload.pagination.nextCursor;
-
-          // Store the cursor for the next page
-          const currentPage = action.payload.pagination.currentPage;
-          const nextPage = currentPage + 1;
-          if (action.payload.pagination.nextCursor) {
-            state.pageCursors[nextPage] = action.payload.pagination.nextCursor;
-          }
+          state.pagination = action.payload.pagination;
         }
       )
       .addCase(fetchVulnerabilities.rejected, (state, action) => {
@@ -138,6 +107,6 @@ const vulnerabilitiesSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters, resetVulnerabilities, setCurrentCursor, setPageCursor } =
+export const { setFilters, clearFilters, resetVulnerabilities, setSorting } =
   vulnerabilitiesSlice.actions;
 export default vulnerabilitiesSlice.reducer;
