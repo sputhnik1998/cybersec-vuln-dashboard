@@ -57,11 +57,44 @@
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border-default);
   transition: all var(--transition-normal);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+.header__chart-card * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .header__chart-card:hover {
   border-color: var(--color-border-light);
   box-shadow: var(--shadow-lg);
+}
+
+.header__chart-card:focus,
+.header__chart-card:active,
+.header__chart-card:focus-visible {
+  outline: none !important;
+  border-color: var(--color-border-default);
+  box-shadow: none;
+}
+
+.header__chart-card::selection,
+.header__chart-card *::selection {
+  background: transparent;
+}
+
+.header__chart-card::-moz-selection,
+.header__chart-card *::-moz-selection {
+  background: transparent;
 }
 
 .header__chart-title {
