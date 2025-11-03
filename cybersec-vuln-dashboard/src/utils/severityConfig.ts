@@ -7,6 +7,10 @@ export const SEVERITY_COLORS: Record<SeverityLevel, string> = {
   low: '#22c55e',
 };
 
+export const getSeverityColor = (severity: string): string => {
+  return SEVERITY_COLORS[severity as SeverityLevel] || '#666';
+};
+
 export const formatSeverityData = (
   severityBreakdown: Record<SeverityLevel, number>
 ): SeverityData[] => {

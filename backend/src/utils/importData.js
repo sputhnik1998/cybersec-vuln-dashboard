@@ -2,19 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Vulnerability = require('../models/Vulnerability');
-
-const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB Connected');
-  } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1);
-  }
-};
+const connectDB = require('../config/database');
 
 const extractVulnerabilities = (data) => {
   const vulnerabilities = [];

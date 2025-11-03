@@ -1,0 +1,55 @@
+/* ============================================
+   Header Component - Dark Mode Styles
+   ============================================ */
+
+.header {
+  background-color: var(--color-bg-secondary) !important;
+  border-bottom: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-md) !important;
+}
+
+.header__toolbar {
+  padding: var(--spacing-md) var(--spacing-xl);
+  min-height: 70px;
+}
+
+.header__logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.header__logo-container:hover {
+  opacity: 2;
+}
+
+.header__logo {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header__title {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 1.5rem;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .header__toolbar {
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 60px;
+  }
+
+  .header__logo {
+    height: 40px;
+  }
+
+  .header__title {
+    font-size: 1.25rem;
+  }
+}

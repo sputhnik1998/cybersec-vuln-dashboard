@@ -18,6 +18,9 @@ interface VulnerabilitiesState {
   error: string | null;
   sortBy: string;
   sortOrder: 'asc' | 'desc';
+  currentPage: number;
+  rowsPerPage: number;
+  scrollPosition: number;
   filters: {
     severity: string;
     status: string;
@@ -31,8 +34,11 @@ const initialState: VulnerabilitiesState = {
   pagination: null,
   loading: false,
   error: null,
-  sortBy: 'published',
-  sortOrder: 'desc',
+  sortBy: 'severity',
+  sortOrder: 'asc',
+  currentPage: 1,
+  rowsPerPage: 25,
+  scrollPosition: 0,
   filters: {
     severity: '',
     status: '',
@@ -85,6 +91,16 @@ const vulnerabilitiesSlice = createSlice({
       state.sortBy = action.payload.sortBy;
       state.sortOrder = action.payload.sortOrder;
     },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    setRowsPerPage: (state, action: PayloadAction<number>) => {
+      state.rowsPerPage = action.payload;
+      state.currentPage = 1; // Reset to page 1 when changing rows per page
+    },
+    setScrollPosition: (state, action: PayloadAction<number>) => {
+      state.scrollPosition = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -107,6 +123,6 @@ const vulnerabilitiesSlice = createSlice({
   },
 });
 
-export const { setFilters, clearFilters, resetVulnerabilities, setSorting } =
+export const { setFilters, clearFilters, resetVulnerabilities, setSorting, setCurrentPage, setRowsPerPage, setScrollPosition } =
   vulnerabilitiesSlice.actions;
 export default vulnerabilitiesSlice.reducer;

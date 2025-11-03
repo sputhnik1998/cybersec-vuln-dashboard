@@ -2,25 +2,25 @@
 export const colors = {
   // Primary background colors
   background: {
-    primary: '#0a0e27',      // Main background
-    secondary: '#141932',    // Card backgrounds
-    tertiary: '#1a1f3a',     // Elevated surfaces
-    hover: '#1f2542',        // Hover states
+    primary: '#0a0a0a',      // Main background
+    secondary: '#1a1a1a',    // Card backgrounds
+    tertiary: '#2a2a2a',     // Elevated surfaces
+    hover: '#353535',        // Hover states
   },
 
   // Text colors
   text: {
-    primary: '#e2e8f0',      // Main text
-    secondary: '#94a3b8',    // Secondary text
-    tertiary: '#64748b',     // Tertiary text / labels
-    disabled: '#475569',     // Disabled text
+    primary: '#fcfcfc',      // Main text
+    secondary: '#9b9b9b',    // Secondary text
+    tertiary: '#6a6a6a',     // Tertiary text / labels
+    disabled: '#535353',     // Disabled text
   },
 
   // Border colors
   border: {
-    default: '#1e293b',      // Default borders
-    light: '#334155',        // Light borders
-    focus: '#3b82f6',        // Focus state
+    default: '#2a2a2a',      // Default borders
+    light: '#3a3a3a',        // Light borders
+    focus: '#676767',        // Focus state
   },
 
   // Severity colors (maintain contrast for dark mode)
@@ -36,23 +36,23 @@ export const colors = {
     success: '#10b981',
     warning: '#f59e0b',
     error: '#ef4444',
-    info: '#3b82f6',
+    info: '#676767',
   },
 
-  // Chart colors (colorblind-friendly)
+  // Chart colors (blue theme)
   chart: {
-    primary: '#3b82f6',      // Blue
-    secondary: '#8b5cf6',    // Purple
-    tertiary: '#06b6d4',     // Cyan
-    quaternary: '#10b981',   // Green
-    quinary: '#f59e0b',      // Amber
+    primary: '#3b82f6',      // Bright blue
+    secondary: '#60a5fa',    // Light blue
+    tertiary: '#2563eb',     // Deep blue
+    quaternary: '#1d4ed8',   // Dark blue
+    quinary: '#1e40af',      // Navy blue
   },
 
   // Accent colors
   accent: {
     primary: '#3b82f6',      // Primary blue
-    secondary: '#8b5cf6',    // Purple
-    tertiary: '#06b6d4',     // Cyan
+    secondary: '#60a5fa',    // Light blue
+    tertiary: '#2563eb',     // Deep blue
   },
 };
 

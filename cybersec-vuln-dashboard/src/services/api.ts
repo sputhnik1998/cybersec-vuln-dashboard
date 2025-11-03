@@ -82,7 +82,12 @@ export const getVulnerabilities = async (params?: {
   sortBy?: string;
   order?: 'asc' | 'desc';
 }): Promise<VulnerabilitiesResponse> => {
-  const response = await api.get('/vulnerabilities', { params });
+  // Filter out empty string values and undefined
+  const cleanParams = params ? Object.fromEntries(
+    Object.entries(params).filter(([, value]) => value !== '' && value !== undefined)
+  ) : {};
+
+  const response = await api.get('/vulnerabilities', { params: cleanParams });
   return response.data;
 };
 

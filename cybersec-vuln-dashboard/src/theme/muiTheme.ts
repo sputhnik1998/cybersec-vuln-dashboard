@@ -8,14 +8,14 @@ export const muiTheme = createTheme({
     mode: 'dark',
     primary: {
       main: colors.accent.primary,
-      light: '#60a5fa',
-      dark: '#2563eb',
+      light: '#9b9b9b',
+      dark: '#535353',
       contrastText: '#ffffff',
     },
     secondary: {
       main: colors.accent.secondary,
-      light: '#a78bfa',
-      dark: '#7c3aed',
+      light: '#818181',
+      dark: '#353535',
       contrastText: '#ffffff',
     },
     error: {
