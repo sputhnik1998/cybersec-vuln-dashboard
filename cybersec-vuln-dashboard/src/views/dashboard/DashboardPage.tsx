@@ -19,13 +19,7 @@ const DashboardPage = () => {
   const scrollPosition = useAppSelector((state) => state.vulnerabilities.scrollPosition);
 
   // Get data from Redux store
-  const { stats, riskFactors, timeline, loading: dashboardLoading } = useAppSelector((state) => ({
-    stats: state.dashboard.stats,
-    riskFactors: state.dashboard.riskFactors,
-    timeline: state.dashboard.timeline,
-    loading: state.dashboard.loading,
-    error: state.dashboard.error,
-  }));
+  const { stats, riskFactors, timeline, loading: dashboardLoading } = useAppSelector((state) => state.dashboard);
 
   // Get vulnerabilities data
   const { items: vulnerabilities, pagination, loading: vulnerabilitiesLoading, currentPage, rowsPerPage, sortBy, sortOrder } = useAppSelector(
@@ -109,11 +103,11 @@ const DashboardPage = () => {
   // Check if this is initial load (no data in Redux at all)
   const isInitialLoad = !stats && !pagination;
 
-  // Show loading state only during initial load AND while fetching
-  const isLoading = isInitialLoad && (dashboardLoading || vulnerabilitiesLoading);
+  // Show loading state while fetching data
+  const isLoading = (dashboardLoading.stats || dashboardLoading.riskFactors || vulnerabilitiesLoading) || isInitialLoad;
 
-  // Show loading state while any data is being fetched for the first time
-  if (isLoading) {
+  // Show loading state while any data is being fetched
+  if (isLoading && !stats) {
     return (
       <Layout>
         <Box className="dashboard-page">
@@ -128,8 +122,8 @@ const DashboardPage = () => {
     );
   }
 
-  // If we have no data after loading, show error or empty state
-  if (!stats || !pagination) {
+  // If we have no data after loading is complete, show error
+  if ((!stats || !pagination) && !dashboardLoading.stats && !dashboardLoading.riskFactors && !vulnerabilitiesLoading) {
     return (
       <Layout>
         <Box className="dashboard-page">
@@ -172,25 +166,23 @@ const DashboardPage = () => {
           <Typography variant="h6" className="dashboard-page__chart-title">
             Vulnerability Severity Distribution
           </Typography>
-          <SeverityRadialBarChart data={severityData} loading={false} />
+          <SeverityRadialBarChart data={severityData} loading={dashboardLoading.stats} />
         </Paper>
         <Paper elevation={2} className="dashboard-page__chart-card" tabIndex={-1} onMouseDown={handleChartMouseDown} sx={{ backgroundColor: '#1a1a1a' }}>
           <Typography variant="h6" className="dashboard-page__chart-title">
             Top Risk Factors
           </Typography>
-          <RiskFactorsBarChart data={riskFactors} loading={false} />
+          <RiskFactorsBarChart data={riskFactors} loading={dashboardLoading.riskFactors} />
         </Paper>
       </Box>
 
       {/* Third Row - Timeline Chart */}
-      <Box sx={{ marginTop: 2 }}>
-        <Paper elevation={2} className="dashboard-page__chart-card" tabIndex={-1} onMouseDown={handleChartMouseDown} sx={{ backgroundColor: '#1a1a1a' }}>
-          <Typography variant="h6" className="dashboard-page__chart-title">
-            Vulnerabilities Over Time (Current Page)
-          </Typography>
-          <VulnerabilitiesTimeline key={timelineKey} data={currentPageTimeline} loading={false} />
-        </Paper>
-      </Box>
+      <Paper elevation={2} className="dashboard-page__chart-card" tabIndex={-1} onMouseDown={handleChartMouseDown} sx={{ backgroundColor: '#1a1a1a', marginBottom: 'var(--spacing-md)' }}>
+        <Typography variant="h6" className="dashboard-page__chart-title">
+          Vulnerabilities Over Time (Current Page)
+        </Typography>
+        <VulnerabilitiesTimeline key={timelineKey} data={currentPageTimeline} loading={vulnerabilitiesLoading} />
+      </Paper>
 
       {/* Fourth Row - Vulnerability Table */}
       <VulnerabilityTable />
