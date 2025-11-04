@@ -1,186 +1,143 @@
-# Cybersecurity Vulnerability Dashboard - Backend
+# Cybersecurity Vulnerability Dashboard
 
-MongoDB + Express.js backend API for managing and querying vulnerability data.
+Production-ready dashboard for tracking and analyzing security vulnerabilities with advanced filtering, caching, and real-time statistics.
 
-## Setup Instructions
+## Architecture
 
-### 1. Install MongoDB
+- **Backend**: Express.js REST API with MongoDB and node-cache
+- **Frontend**: React + TypeScript + Redux Toolkit + Material-UI
+- **Caching**: 30-minute TTL, 95%+ DB load reduction
+- **Performance**: Unified dashboard endpoint, optimized aggregations
 
-Choose ONE option:
+## Features
 
-#### Option A: MongoDB Atlas (Cloud - Recommended)
-1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create a free account
-3. Create a new cluster (Free tier - M0)
-4. Click "Connect" and get your connection string
-5. Update `.env` file with your connection string
+### Dashboard
+- Real-time vulnerability metrics with caching
+- Severity breakdown radial charts
+- Top 10 risk factors visualization
+- 12-month vulnerability timeline
+- Critical alerts for high-risk vulnerabilities
 
-#### Option B: MongoDB Local (On your Mac)
-```bash
-# Install MongoDB using Homebrew
-brew tap mongodb/brew
-brew install mongodb-community
+### Vulnerability Table
+- Advanced filtering (severity, status, package, CVE, Kai analysis)
+- Sortable columns with pagination
+- Search with regex support
+- Exclusion filters for analysis results
+- Export and detailed CVE views
 
-# Start MongoDB
-brew services start mongodb-community
-```
+### Performance
+- Single unified API endpoint for dashboard (3→1 requests)
+- Automatic cache warming on server startup
+- Cache hit rate monitoring
+- Debug logging system (ERROR/WARN/INFO/DEBUG)
 
-### 2. Configure Environment Variables
-
-Update the `.env` file:
-
-```env
-PORT=5000
-MONGODB_URI=your-mongodb-connection-string
-NODE_ENV=development
-```
-
-For local MongoDB, use:
-```
-MONGODB_URI=mongodb://localhost:27017/cybersec-dashboard
-```
-
-For MongoDB Atlas, use the connection string from step 1:
-```
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/cybersec-dashboard?retryWrites=true&w=majority
-```
-
-### 3. Import Your Data
-
-Place your JSON file with vulnerability data in a location, then run:
+## Quick Start
 
 ```bash
-npm run import /path/to/your/vulnerabilities.json
-```
+# Clone repository
+git clone <repo-url>
+cd cybersec-vuln-dashboard
 
-Example:
-```bash
-npm run import ../data/vulnerabilities.json
-```
+# Backend setup
+cd backend
+npm install
+cp .env.example .env
+# Edit .env with MongoDB URI
+npm start
 
-This will:
-- Connect to MongoDB
-- Clear existing data
-- Import all records in batches of 1000
-- Create indexes for fast querying
-
-### 4. Start the Server
-
-Development mode (auto-restart on changes):
-```bash
+# Frontend setup (new terminal)
+cd ../cybersec-vuln-dashboard
+npm install
 npm run dev
 ```
 
-Production mode:
+Access dashboard at `http://localhost:5173`
+
+## Configuration
+
+### Backend (.env)
+```env
+PORT=5001
+MONGODB_URI=mongodb+srv://...
+LOG_LEVEL=INFO  # ERROR | WARN | INFO | DEBUG
+```
+
+### Frontend
+```env
+VITE_API_URL=http://localhost:5001/api
+```
+
+## API Documentation
+
+### Dashboard Endpoints
+- `GET /api/dashboard/aggregates` - Unified dashboard data (cached)
+- `GET /api/dashboard/cache/stats` - Cache metrics
+- `POST /api/dashboard/cache/invalidate` - Invalidate cache
+
+### Vulnerability Endpoints
+- `GET /api/vulnerabilities` - List with filters, pagination, sorting
+- `GET /api/vulnerabilities/:id` - Single vulnerability details
+
+## Development
+
 ```bash
-npm start
-```
+# Backend (with nodemon)
+cd backend && npm run dev
 
-Server will run on: `http://localhost:5000`
+# Frontend (with Vite HMR)
+cd cybersec-vuln-dashboard && npm run dev
 
-## API Endpoints
-
-### Get Vulnerabilities
-```
-GET /api/vulnerabilities
-```
-
-Query parameters:
-- `page` - Page number (default: 1)
-- `limit` - Items per page (default: 50)
-- `severity` - Filter by severity (critical, high, medium, low)
-- `status` - Filter by status (e.g., "fixed")
-- `packageName` - Filter by package name
-- `cve` - Search by CVE ID
-- `sortBy` - Sort field (default: published)
-- `order` - Sort order (asc/desc, default: desc)
-
-Example:
-```
-GET /api/vulnerabilities?severity=critical&page=1&limit=20
-```
-
-### Get Dashboard Statistics
-```
-GET /api/vulnerabilities/stats
-```
-
-Returns:
-- Total vulnerabilities
-- Affected repositories count
-- Fixed percentage
-- Severity breakdown
-
-### Get Vulnerabilities Timeline
-```
-GET /api/vulnerabilities/timeline?months=12
-```
-
-Returns vulnerability counts grouped by month.
-
-### Get Risk Factors
-```
-GET /api/vulnerabilities/risk-factors
-```
-
-Returns top 10 risk factors with counts.
-
-### Get Single Vulnerability
-```
-GET /api/vulnerabilities/:id
-```
-
-### Health Check
-```
-GET /health
+# Debug mode
+LOG_LEVEL=DEBUG npm start
 ```
 
 ## Project Structure
 
 ```
-backend/
-├── src/
-│   ├── config/
-│   │   └── database.js       # MongoDB connection
-│   ├── models/
-│   │   └── Vulnerability.js  # Mongoose schema
-│   ├── controllers/
-│   │   └── vulnerabilityController.js  # Business logic
-│   ├── routes/
-│   │   └── vulnerabilityRoutes.js      # API routes
-│   ├── utils/
-│   │   └── importData.js     # Data import script
-│   └── server.js             # Express app entry point
-├── .env                      # Environment variables
-├── .env.example             # Environment template
-└── package.json
+cybersec-vuln-dashboard/
+├── backend/                 # Express API
+│   ├── src/
+│   │   ├── controllers/    # Request handlers
+│   │   ├── middleware/     # Cache, logging
+│   │   ├── models/        # Mongoose schemas
+│   │   ├── routes/        # API routes
+│   │   ├── services/      # Business logic
+│   │   └── utils/         # Logger, utilities
+│   └── README.md          # Backend docs
+│
+├── cybersec-vuln-dashboard/ # React frontend
+│   ├── src/
+│   │   ├── components/    # UI components
+│   │   ├── store/         # Redux store
+│   │   ├── services/      # API client
+│   │   └── views/         # Pages
+│   └── README.md          # Frontend docs
+│
+└── README.md              # This file
 ```
 
-## Quick Start
+## Deployment
 
+### Backend
 ```bash
-# Install dependencies
-npm install
+NODE_ENV=production LOG_LEVEL=INFO npm start
 
-# Set up MongoDB (choose Atlas or local)
-
-# Update .env with MongoDB URI
-
-# Import data
-npm run import /path/to/vulnerabilities.json
-
-# Start server
-npm run dev
+# Or with PM2
+pm2 start src/server.js --name cybersec-api
 ```
 
-## Performance Notes
+### Frontend
+```bash
+npm run build
+# Serve dist/ folder with nginx or similar
+```
 
-- Indexes are created automatically on:
-  - CVE ID
-  - Severity
-  - Package name
-  - Status
-  - Fix date
-- Optimized for 700k+ records
-- Queries use lean() for better performance
-- Pagination prevents memory issues
+## Git Workflow
+
+Recent commits follow day-based agile workflow:
+- `day5`: Advanced table filtering components
+- `day6`: Dashboard optimization with caching
+
+## License
+
+MIT

@@ -1,27 +1,26 @@
 const dashboardService = require('../services/dashboardService');
 const { invalidateCache, clearCache, getCacheStats } = require('../middleware/cacheMiddleware');
+const { createLogger } = require('../utils/logger');
+
+const logger = createLogger('DashboardController');
 
 /**
- * Get unified dashboard aggregates
- * This endpoint returns all dashboard card data in a single response
- * Cached for 30 minutes by default
- *
- * @route GET /api/dashboard/aggregates
+ * Get unified dashboard aggregates (cached for 30 minutes)
  */
 exports.getAggregates = async (req, res) => {
   try {
     const { timelineMonths } = req.query;
-
     const options = {
       timelineMonths: timelineMonths ? parseInt(timelineMonths) : 12,
     };
 
-    // Fetch unified dashboard data
+    logger.debug('Fetching dashboard aggregates', options);
     const dashboardData = await dashboardService.getDashboardAggregates(options);
+    logger.debug('Dashboard aggregates fetched successfully');
 
     res.json(dashboardData);
   } catch (error) {
-    console.error('[Dashboard Controller] Error in getAggregates:', error);
+    logger.error('Error fetching dashboard aggregates', { error: error.message });
     res.status(500).json({
       message: 'Failed to fetch dashboard aggregates',
       error: error.message,
@@ -31,15 +30,14 @@ exports.getAggregates = async (req, res) => {
 
 /**
  * Invalidate dashboard cache
- * Useful for forcing a refresh of cached data
- *
- * @route POST /api/dashboard/cache/invalidate
  */
 exports.invalidateCache = async (req, res) => {
   try {
     const { pattern = 'dashboard:*' } = req.body;
+    logger.info('Invalidating cache', { pattern });
 
     const deletedCount = invalidateCache(pattern);
+    logger.info('Cache invalidated', { deletedKeys: deletedCount });
 
     res.json({
       success: true,
@@ -48,7 +46,7 @@ exports.invalidateCache = async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('[Dashboard Controller] Error invalidating cache:', error);
+    logger.error('Error invalidating cache', { error: error.message });
     res.status(500).json({
       success: false,
       message: 'Failed to invalidate cache',
@@ -59,12 +57,10 @@ exports.invalidateCache = async (req, res) => {
 
 /**
  * Clear all cache
- * Nuclear option - clears entire cache
- *
- * @route POST /api/dashboard/cache/clear
  */
 exports.clearAllCache = async (req, res) => {
   try {
+    logger.warn('Clearing all cache');
     const success = clearCache();
 
     res.json({
@@ -73,7 +69,7 @@ exports.clearAllCache = async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('[Dashboard Controller] Error clearing cache:', error);
+    logger.error('Error clearing cache', { error: error.message });
     res.status(500).json({
       success: false,
       message: 'Failed to clear cache',
@@ -84,13 +80,11 @@ exports.clearAllCache = async (req, res) => {
 
 /**
  * Get cache statistics
- * Monitor cache performance and hit rates
- *
- * @route GET /api/dashboard/cache/stats
  */
 exports.getCacheStats = async (req, res) => {
   try {
     const stats = getCacheStats();
+    logger.debug('Cache stats retrieved', stats);
 
     res.json({
       success: true,
@@ -98,7 +92,7 @@ exports.getCacheStats = async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('[Dashboard Controller] Error getting cache stats:', error);
+    logger.error('Error getting cache stats', { error: error.message });
     res.status(500).json({
       success: false,
       message: 'Failed to get cache stats',
@@ -109,18 +103,15 @@ exports.getCacheStats = async (req, res) => {
 
 /**
  * Health check endpoint
- * Lightweight check without hitting cache or expensive queries
- *
- * @route GET /api/dashboard/health
  */
 exports.healthCheck = async (req, res) => {
   try {
     const healthData = await dashboardService.getHealthCheckData();
-
     const statusCode = healthData.healthy ? 200 : 503;
+
     res.status(statusCode).json(healthData);
   } catch (error) {
-    console.error('[Dashboard Controller] Error in health check:', error);
+    logger.error('Health check failed', { error: error.message });
     res.status(503).json({
       healthy: false,
       error: error.message,
