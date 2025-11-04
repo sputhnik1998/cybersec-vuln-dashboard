@@ -109,28 +109,6 @@ export const getVulnerabilities = async (params?: {
   return response.data;
 };
 
-// Get dashboard statistics
-export const getDashboardStats = async (): Promise<DashboardStats> => {
-  const response = await api.get('/vulnerabilities/stats');
-  return response.data;
-};
-
-// Get vulnerabilities timeline
-export const getVulnerabilitiesTimeline = async (
-  months: number = 12
-): Promise<TimelineData[]> => {
-  const response = await api.get('/vulnerabilities/timeline', {
-    params: { months },
-  });
-  return response.data;
-};
-
-// Get risk factors
-export const getRiskFactors = async (): Promise<RiskFactor[]> => {
-  const response = await api.get('/vulnerabilities/risk-factors');
-  return response.data;
-};
-
 // Get single vulnerability by ID
 export const getVulnerabilityById = async (id: string): Promise<Vulnerability> => {
   const response = await api.get(`/vulnerabilities/${id}`);
