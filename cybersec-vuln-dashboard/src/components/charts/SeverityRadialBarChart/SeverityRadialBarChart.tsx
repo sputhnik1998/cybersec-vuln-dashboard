@@ -74,7 +74,7 @@ const SeverityRadialBarChartComponent = ({
 
   return (
     <Box className="severity-radial-bar-chart">
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={270} debounce={50}>
         <RadialBarChart
           cx="50%"
           cy="50%"
