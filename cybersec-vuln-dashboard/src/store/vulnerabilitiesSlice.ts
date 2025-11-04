@@ -26,6 +26,7 @@ interface VulnerabilitiesState {
     status: string;
     packageName: string;
     cve: string;
+    kaiStatus: string;
   };
 }
 
@@ -37,13 +38,14 @@ const initialState: VulnerabilitiesState = {
   sortBy: 'severity',
   sortOrder: 'asc',
   currentPage: 1,
-  rowsPerPage: 25,
+  rowsPerPage: 10,
   scrollPosition: 0,
   filters: {
     severity: '',
     status: '',
     packageName: '',
     cve: '',
+    kaiStatus: '',
   },
 };
 
@@ -54,6 +56,7 @@ interface FetchVulnerabilitiesParams {
   status?: string;
   packageName?: string;
   cve?: string;
+  kaiStatus?: string;
   sortBy?: string;
   order?: 'asc' | 'desc';
 }
@@ -80,6 +83,7 @@ const vulnerabilitiesSlice = createSlice({
         status: '',
         packageName: '',
         cve: '',
+        kaiStatus: '',
       };
     },
     resetVulnerabilities: (state) => {

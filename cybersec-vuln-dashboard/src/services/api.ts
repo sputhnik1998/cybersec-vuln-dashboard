@@ -16,6 +16,7 @@ export interface Vulnerability {
   severity: 'critical' | 'high' | 'medium' | 'low';
   cvss: number;
   status: string;
+  kaiStatus?: string;
   cause?: string;
   description: string;
   vecStr?: string;
@@ -79,6 +80,7 @@ export const getVulnerabilities = async (params?: {
   status?: string;
   packageName?: string;
   cve?: string;
+  kaiStatus?: string;
   sortBy?: string;
   order?: 'asc' | 'desc';
 }): Promise<VulnerabilitiesResponse> => {
