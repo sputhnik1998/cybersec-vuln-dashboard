@@ -72,6 +72,22 @@ export interface RiskFactor {
   count: number;
 }
 
+export interface DashboardAggregates {
+  stats: DashboardStats;
+  riskFactors: RiskFactor[];
+  timeline: TimelineData[];
+  metadata: {
+    generatedAt: string;
+    timelineMonths: number;
+    queriesExecuted: number;
+  };
+  _cache?: {
+    hit: boolean;
+    key: string;
+    ttl: number;
+  };
+}
+
 // Get all vulnerabilities with filtering and pagination
 export const getVulnerabilities = async (params?: {
   page?: number;
@@ -118,6 +134,28 @@ export const getRiskFactors = async (): Promise<RiskFactor[]> => {
 // Get single vulnerability by ID
 export const getVulnerabilityById = async (id: string): Promise<Vulnerability> => {
   const response = await api.get(`/vulnerabilities/${id}`);
+  return response.data;
+};
+
+// Get unified dashboard aggregates (cached, single endpoint)
+export const getDashboardAggregates = async (
+  timelineMonths: number = 12
+): Promise<DashboardAggregates> => {
+  const response = await api.get('/dashboard/aggregates', {
+    params: { timelineMonths },
+  });
+  return response.data;
+};
+
+// Invalidate dashboard cache
+export const invalidateDashboardCache = async (): Promise<{ success: boolean }> => {
+  const response = await api.post('/dashboard/cache/invalidate');
+  return response.data;
+};
+
+// Get cache statistics
+export const getCacheStats = async (): Promise<any> => {
+  const response = await api.get('/dashboard/cache/stats');
   return response.data;
 };
 
