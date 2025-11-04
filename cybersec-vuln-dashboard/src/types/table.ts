@@ -10,3 +10,11 @@ export type SortableColumn =
 export interface VulnerabilityTableProps {
   initialLimit?: number;
 }
+
+export interface FilterValues {
+  severity: string;
+  status: string;
+  packageName: string;
+  cve: string;
+  kaiStatus: string;
+}
