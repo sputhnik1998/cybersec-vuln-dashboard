@@ -105,3 +105,26 @@
 .vulnerabilities-timeline svg *::selection {
   background: transparent !important;
 }
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .vulnerabilities-timeline {
+    min-height: 240px;
+  }
+
+  .vulnerabilities-timeline__loading,
+  .vulnerabilities-timeline__empty {
+    min-height: 240px;
+  }
+}
+
+@media (max-width: 400px) {
+  .vulnerabilities-timeline {
+    min-height: 220px;
+  }
+
+  .vulnerabilities-timeline__loading,
+  .vulnerabilities-timeline__empty {
+    min-height: 220px;
+  }
+}

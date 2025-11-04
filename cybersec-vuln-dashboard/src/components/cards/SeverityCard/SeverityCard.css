@@ -5,6 +5,7 @@
 .severity-card {
   padding: var(--spacing-xl);
   height: 100%;
+  width: 100%;
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
@@ -54,14 +55,46 @@
 /* Responsive adjustments */
 @media (max-width: 599px) {
   .severity-card {
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
   }
 
   .severity-card__grid {
-    gap: var(--spacing-md);
+    gap: 0.75rem;
+  }
+
+  .severity-card__indicator {
+    width: 12px;
+    height: 12px;
+  }
+
+  .severity-card__label {
+    font-size: 0.7rem;
   }
 
   .severity-card__count {
     font-size: var(--font-size-body-large);
+  }
+}
+
+@media (max-width: 400px) {
+  .severity-card {
+    padding: 0.75rem;
+  }
+
+  .severity-card__grid {
+    gap: 0.5rem;
+  }
+
+  .severity-card__indicator {
+    width: 10px;
+    height: 10px;
+  }
+
+  .severity-card__label {
+    font-size: 0.65rem;
+  }
+
+  .severity-card__count {
+    font-size: 0.9rem;
   }
 }

@@ -73,7 +73,7 @@ const SeverityRadialBarChartComponent = ({
   }
 
   return (
-    <Box className="severity-radial-bar-chart" sx={{ width: '100%', height: '270px' }}>
+    <Box className="severity-radial-bar-chart">
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart
           cx="50%"
@@ -92,8 +92,8 @@ const SeverityRadialBarChartComponent = ({
           />
           <Legend
             iconSize={10}
-            width={120}
-            height={140}
+            width={80}
+            height={80}
             layout="vertical"
             verticalAlign="middle"
             align="right"

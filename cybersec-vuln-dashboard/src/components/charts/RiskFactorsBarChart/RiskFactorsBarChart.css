@@ -77,3 +77,26 @@
 .risk-factors-bar-chart .recharts-cartesian-axis-tick-value {
   fill: #9ca3af;
 }
+
+/* Responsive adjustments */
+@media (max-width: 599px) {
+  .risk-factors-bar-chart {
+    min-height: 220px;
+  }
+
+  .risk-factors-bar-chart__loading,
+  .risk-factors-bar-chart__empty {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 400px) {
+  .risk-factors-bar-chart {
+    min-height: 200px;
+  }
+
+  .risk-factors-bar-chart__loading,
+  .risk-factors-bar-chart__empty {
+    min-height: 200px;
+  }
+}
