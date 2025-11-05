@@ -1,73 +1,101 @@
-# React + TypeScript + Vite
+# Frontend - Cybersecurity Vulnerability Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript frontend for vulnerability tracking and analysis.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 18** + **TypeScript**
+- **Redux Toolkit** - State management
+- **Material-UI** - UI components
+- **Recharts** - Data visualization
+- **Vite** - Build tool with HMR
+- **React Router** - Navigation
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Access at `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Configuration
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Create `.env`:
+```env
+VITE_API_URL=http://localhost:5001/api
 ```
+
+## Scripts
+
+```bash
+npm run dev      # Development server
+npm run build    # Production build
+npm run preview  # Preview build
+npm run lint     # ESLint
+```
+
+## Project Structure
+
+```
+src/
+├── components/       # Reusable UI components
+│   ├── alerts/      # Alert components
+│   ├── cards/       # Metric/Severity cards
+│   ├── charts/      # Chart components (Recharts)
+│   ├── layout/      # Layout wrapper
+│   └── tables/      # Vulnerability table
+├── services/        # API client (axios)
+├── store/           # Redux slices
+│   ├── dashboardSlice.ts
+│   └── vulnerabilitiesSlice.ts
+├── types/           # TypeScript interfaces
+├── utils/           # Utilities
+└── views/           # Page components
+    ├── dashboard/   # Dashboard page
+    └── cve-detail/  # CVE detail page
+```
+
+## Features
+
+### Dashboard
+- Real-time metrics with automatic caching
+- Severity distribution radial chart
+- Risk factors bar chart
+- Vulnerabilities timeline (current page)
+- Critical vulnerability alerts
+
+### Vulnerability Table
+- Advanced filtering (severity, status, package, CVE)
+- Kai analysis exclusion toggles
+- Column sorting
+- Pagination with max jump protection
+- Regex search support
+- Click-through to CVE details
+
+### Mobile Responsive
+- Adaptive grid layouts
+- Optimized chart sizing
+- Touch-friendly interactions
+
+## State Management
+
+Redux slices handle:
+- **Dashboard**: Stats, risk factors, timeline caching
+- **Vulnerabilities**: Pagination, filters, sorting, scroll position
+
+## Build & Deploy
+
+```bash
+npm run build
+# Outputs to dist/
+# Serve with nginx, Vercel, etc.
+```
+
+## Development Notes
+
+- Uses CSS variables for theming (dark mode)
+- Memoized components for performance
+- Type-safe with strict TypeScript
+- Centralized type definitions in `/src/types`

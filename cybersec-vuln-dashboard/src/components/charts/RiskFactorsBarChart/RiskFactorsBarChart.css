@@ -82,6 +82,7 @@
 @media (max-width: 599px) {
   .risk-factors-bar-chart {
     min-height: 220px;
+    height: 220px;
   }
 
   .risk-factors-bar-chart__loading,
@@ -93,6 +94,7 @@
 @media (max-width: 400px) {
   .risk-factors-bar-chart {
     min-height: 200px;
+    height: 200px;
   }
 
   .risk-factors-bar-chart__loading,

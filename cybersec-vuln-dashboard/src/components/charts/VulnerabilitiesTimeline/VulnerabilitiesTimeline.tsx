@@ -94,7 +94,7 @@ const VulnerabilitiesTimelineComponent = ({
 
   return (
     <Box className="vulnerabilities-timeline">
-      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={300} debounce={50}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={200} debounce={50}>
         <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
           <defs>
             <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">

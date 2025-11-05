@@ -109,22 +109,24 @@
 /* Responsive adjustments */
 @media (max-width: 599px) {
   .vulnerabilities-timeline {
-    min-height: 240px;
+    min-height: 220px;
+    height: 220px;
   }
 
   .vulnerabilities-timeline__loading,
   .vulnerabilities-timeline__empty {
-    min-height: 240px;
+    min-height: 220px;
   }
 }
 
 @media (max-width: 400px) {
   .vulnerabilities-timeline {
-    min-height: 220px;
+    min-height: 200px;
+    height: 200px;
   }
 
   .vulnerabilities-timeline__loading,
   .vulnerabilities-timeline__empty {
-    min-height: 220px;
+    min-height: 200px;
   }
 }

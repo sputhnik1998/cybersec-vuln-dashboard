@@ -100,6 +100,18 @@
 /* Responsive adjustments */
 @media (max-width: 599px) {
   .severity-radial-bar-chart {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .severity-radial-bar-chart__loading,
+  .severity-radial-bar-chart__empty {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 400px) {
+  .severity-radial-bar-chart {
     min-height: 200px;
     height: 200px;
   }
@@ -107,17 +119,5 @@
   .severity-radial-bar-chart__loading,
   .severity-radial-bar-chart__empty {
     min-height: 200px;
-  }
-}
-
-@media (max-width: 400px) {
-  .severity-radial-bar-chart {
-    min-height: 180px;
-    height: 180px;
-  }
-
-  .severity-radial-bar-chart__loading,
-  .severity-radial-bar-chart__empty {
-    min-height: 180px;
   }
 }

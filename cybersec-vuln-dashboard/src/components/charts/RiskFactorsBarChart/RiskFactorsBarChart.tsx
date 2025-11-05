@@ -74,7 +74,7 @@ const RiskFactorsBarChartComponent = ({ data, loading = false }: RiskFactorsBarC
 
   return (
     <Box className="risk-factors-bar-chart">
-      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={270} debounce={50}>
+      <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={200} debounce={50}>
         <BarChart
           data={chartData}
           margin={{ top: 10, right: 10, left: 0, bottom: 40 }}
