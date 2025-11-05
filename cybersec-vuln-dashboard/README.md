@@ -44,6 +44,7 @@ src/
 │   ├── alerts/      # Alert components
 │   ├── cards/       # Metric/Severity cards
 │   ├── charts/      # Chart components (Recharts)
+│   ├── cve-detail/  # CVE detail components
 │   ├── layout/      # Layout wrapper
 │   └── tables/      # Vulnerability table
 ├── services/        # API client (axios)

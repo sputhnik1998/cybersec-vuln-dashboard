@@ -30,6 +30,20 @@ app.use('/api/vulnerabilities', vulnerabilityRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 logger.info('Routes registered: /api/vulnerabilities, /api/dashboard');
 
+// Root route - for Render health checks
+app.get('/', (req, res) => {
+  res.json({
+    status: 'OK',
+    message: 'Cybersecurity Vulnerability Dashboard API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      vulnerabilities: '/api/vulnerabilities',
+      dashboard: '/api/dashboard'
+    }
+  });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
@@ -67,8 +81,8 @@ connectDB()
       logger.warn('Cache warm-up failed, will populate on first request');
     }
 
-    // Start server
-    app.listen(PORT, () => {
+    // Start server - bind to 0.0.0.0 for cloud deployment
+    app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server running on port ${PORT}`);
       logger.info(`Log level: ${process.env.LOG_LEVEL || 'INFO'}`);
     });

@@ -32,7 +32,7 @@ const DashboardPage = () => {
     const hasVulnerabilitiesData = vulnerabilities.length > 0 && pagination;
 
     if (!hasDashboardData) {
-      dispatch(fetchAllDashboardData());
+      dispatch(fetchAllDashboardData(12));
     }
 
     if (!hasVulnerabilitiesData) {
@@ -141,21 +141,21 @@ const DashboardPage = () => {
     <Layout>
       <Box className="dashboard-page">
         {/* Critical Alert - Shows when critical vulnerabilities > 5 */}
-        <CriticalAlert criticalCount={stats.severityBreakdown.critical} />
+        <CriticalAlert criticalCount={stats?.severityBreakdown.critical ?? 0} />
 
         {/* First Row - 4 Metric Cards */}
       <Box className="dashboard-page__metrics-grid">
         <MetricCard
           title="Total"
-          value={stats.total.toLocaleString()}
+          value={stats?.total.toLocaleString() ?? '0'}
         />
         <MetricCard
           title="Affected Repositories"
-          value={stats.affectedRepositories.toLocaleString()}
+          value={stats?.affectedRepositories.toLocaleString() ?? '0'}
         />
         <MetricCard
           title="Fixed"
-          value={`${stats.fixedPercentage}%`}
+          value={`${stats?.fixedPercentage ?? 0}%`}
         />
         <SeverityCard severities={severityData} />
       </Box>
